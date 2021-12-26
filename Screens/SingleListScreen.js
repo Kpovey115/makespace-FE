@@ -22,59 +22,55 @@ import {
 } from "@expo/vector-icons";
 import ReviewModal from "../Components/ReviewModal";
 import {
-    getSingleListingById,
-    deleteListingById,
-    patchListingById,
+  getSingleListingById,
+  deleteListingById,
+  patchListingById,
 } from "../utils/apiRequests";
 import CalendarComp from "../Components/Calendar";
 const SingleListScreen = ({ route, navigation }) => {
-
-    const [openContact, setOpenContact] = useState(false);
-    const [openReviewModal, setOpenReviewModal] = useState(false);
-    const [listing, setListing] = useState({});
-    const [visible, setVisible] = useState(false);
-    const [markedDates, setMarkedDates] = useState({});
-    const [isBooked, setIsBooked] = useState(false);
-    const { user } = useContext(UserContext);
-
+  const [openContact, setOpenContact] = useState(false);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [listing, setListing] = useState({});
+  const [visible, setVisible] = useState(false);
+  const [markedDates, setMarkedDates] = useState({});
+  const [isBooked, setIsBooked] = useState(false);
+  const { user } = useContext(UserContext);
 
   const showDialog = () => setVisible(true);
 
   const hideDialog = () => setVisible(false);
   const { id, setUserListings } = route.params;
 
+  const handleOwnerRequest = () => {
+    navigation.navigate("UserProfile", { owner: listing.owner });
+  };
+  const handleDelete = () => {
+    deleteListingById(id).then(() => {
+      navigation.navigate("MyListings");
+      setUserListings((prevListings) => {
+        return prevListings.filter((listing) => listing._id !== id);
+      });
+    });
+  };
+  const handleBooking = () => {
+    const newObj = { ...markedDates };
 
-    const handleOwnerRequest = () => {
-        navigation.navigate("UserProfile", { owner: listing.owner });
-    };
-    const handleDelete = () => {
-        deleteListingById(id).then(() => {
-            navigation.navigate("MyListings");
-            setUserListings((prevListings) => {
-                return prevListings.filter((listing) => listing._id !== id);
-            });
-        });
-    };
-    const handleBooking = () => {
-        const newObj = { ...markedDates };
+    for (const date in newObj) {
+      newObj[date].color = "grey";
+    }
+    const updatedListing = { bookedDays: [newObj] };
+    patchListingById(id, updatedListing).then((res) => {
+      setMarkedDates(newObj);
+      navigation.replace("BookingSuccess");
+    });
+  };
 
-        for (const date in newObj) {
-            newObj[date].color = "grey";
-        }
-        const updatedListing = { bookedDays: [newObj] };
-        patchListingById(id, updatedListing).then((res) => {
-            setMarkedDates(newObj);
-            navigation.replace("BookingSuccess");
-        });
-    };
-
-    useEffect(() => {
-        getSingleListingById(id).then((res) => {
-            setListing(res);
-            setMarkedDates(res.bookedDays[0]);
-        });
-    }, [id, isBooked]);
-
+  useEffect(() => {
+    getSingleListingById(id).then((res) => {
+      setListing(res);
+      setMarkedDates(res.bookedDays[0]);
+    });
+  }, [id, isBooked]);
 
   if (Object.keys(listing).length === 0)
     return (
@@ -199,26 +195,20 @@ const SingleListScreen = ({ route, navigation }) => {
                 >
                   <Text style={styles.mapButtonText}>View on map</Text>
 
-
-                                    <FontAwesome5
-                                        name="map-marked-alt"
-                                        size={24}
-                                        color="white"
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            <CalendarComp
-                                listing={listing}
-                                markedDates={markedDates}
-                                setMarkedDates={setMarkedDates}
-                            />
-                            <TouchableOpacity
-                                style={styles.mapButton}
-                                onPress={handleBooking}
-                            >
-                                <Text style={styles.buttonText}>Book now</Text>
-                            </TouchableOpacity>
-
+                  <FontAwesome5 name="map-marked-alt" size={24} color="white" />
+                </TouchableOpacity>
+              </View>
+              <CalendarComp
+                listing={listing}
+                markedDates={markedDates}
+                setMarkedDates={setMarkedDates}
+              />
+              <TouchableOpacity
+                style={styles.mapButton}
+                onPress={handleBooking}
+              >
+                <Text style={styles.buttonText}>Book now</Text>
+              </TouchableOpacity>
 
               <View style={styles.bottomRow}>
                 <Button title="Reviews" />
@@ -234,11 +224,7 @@ const SingleListScreen = ({ route, navigation }) => {
                     onPress={() => setOpenReviewModal(true)}
                   />
                 ) : null}
-                <Button
-                  title="Contact details"
-                  // onPress={() => setOpenContact(!openContact)}
-                  onPress={showDialog}
-                />
+                <Button title="Contact details" onPress={showDialog} />
               </View>
               <View>
                 <Portal>
@@ -332,7 +318,6 @@ const styles = StyleSheet.create({
   },
   descContainer: {
     marginBottom: 20,
-    // borderWidth: 1,
     paddingVertical: 30,
     backgroundColor: "white",
     shadowOffset: { width: 1, height: 8 },
@@ -340,10 +325,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   image: {
-    // flex: 1,
     justifyContent: "center",
-    // width: 500,
-    // height: 600,
     opacity: 1,
     backgroundColor: "white",
   },
@@ -371,7 +353,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginVertical: 10,
     backgroundColor: "white",
-    // shadowOffset: { width: 1, height: 3 },
     shadowColor: "#333",
     shadowOpacity: 0.1,
     paddingVertical: 15,

@@ -15,13 +15,11 @@ const UserListingsScreen = ({ navigation }) => {
   const [userListings, setUserListings] = useState([]);
   console.log(user, "<<<<user");
 
-
-    useEffect(() => {
-        getListingsByUsername(user).then((listings) => {
-            setUserListings(listings);
-        });
-    }, []);
-
+  useEffect(() => {
+    getListingsByUsername(user).then((listings) => {
+      setUserListings(listings);
+    });
+  }, []);
 
   return (
     <View>
@@ -53,7 +51,6 @@ const UserListingsScreen = ({ navigation }) => {
                 price={item.price}
                 rating={item.spaceRating}
                 size={item.size}
-                // images={item.images}
               />
             </TouchableOpacity>
           )}

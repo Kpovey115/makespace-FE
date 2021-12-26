@@ -49,33 +49,6 @@ const CalendarComp = ({ listing, markedDates, setMarkedDates }) => {
   };
   LocaleConfig.defaultLocale = "eng";
 
-  // const markedDates = {
-  //     "2021-12-10": {
-  //         disabled: true,
-  //         startingDay: true,
-  //         color: "grey",
-  //         endingDay: true,
-  //     },
-  //     "2021-12-02": {
-  //         disabled: true,
-  //         startingDay: true,
-  //         color: "grey",
-  //         endingDay: true,
-  //     },
-  //     "2021-12-21": {
-  //         disabled: true,
-  //         startingDay: true,
-  //         color: "grey",
-  //         endingDay: true,
-  //     },
-  //     "2021-12-23": {
-  //         disabled: true,
-  //         startingDay: true,
-  //         color: "grey",
-  //         endingDay: true,
-  //     },
-  // };
-
   return (
     <TouchableOpacity>
       <Calendar
@@ -87,8 +60,6 @@ const CalendarComp = ({ listing, markedDates, setMarkedDates }) => {
         maxDate={"2021-12-31"}
         // Handler which gets executed on day press. Default = undefined
         onDayPress={(day) => {
-          // console.log("selected day", day);
-          // const dateString = day.dateString;
           if (markedDates !== undefined) {
             const markedKeys = Object.keys(markedDates);
             if (markedKeys.includes(day.dateString)) {
@@ -113,9 +84,7 @@ const CalendarComp = ({ listing, markedDates, setMarkedDates }) => {
           });
         }}
         // Handler which gets executed on day long press. Default = undefined
-        onDayLongPress={(day) => {
-          // console.log("selected day", day);
-        }}
+        onDayLongPress={(day) => {}}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={"yyyy MM"}
         // Handler which gets executed when visible month changes in calendar. Default = undefined
