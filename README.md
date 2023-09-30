@@ -80,6 +80,6 @@ If errors occur during login/signup, please ensure you have copied your firebase
 Team Floating Lemons: as part of the Northcoders bootcamp
 
 -   Kyle Povey [linkedin](https://www.linkedin.com/in/kyle-povey/) - [github](https://github.com/Kpovey115)
--   Cat Miller [linkedin](https://www.linkedin.com/in/cat-miller/) - [github](https://github.com/catcodingcat)
+-   Cat Miller [linkedin](https://www.linkedin.com/in/cat-miller/) - [github](https://github.com/CatMillerCM)
 -   Jonathan McGuire [linkedin](https://www.linkedin.com/in/jonathan-j-mcguire/) - [github](https://github.com/popatre)
 -   Scarlett Adams [linkedin](https://www.linkedin.com/in/scarlett-adams/) - [github](https://github.com/scar1377)
